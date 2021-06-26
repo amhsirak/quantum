@@ -16,6 +16,12 @@ window.onload = function() {
             width: 480,
             height: 640,
             parent: 'phaser-game',
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    debug: true
+                }
+            },
             scene: [SceneLoad, SceneTitle, SceneMain, SceneOver]
         };
     } else {
@@ -24,6 +30,12 @@ window.onload = function() {
             width: window.innerWidth,
             height: window.innerHeight,
             parent: 'phaser-game',
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    debug: true
+                }
+            },
             scene: [SceneLoad, SceneTitle, SceneMain, SceneOver]
         };
     }
