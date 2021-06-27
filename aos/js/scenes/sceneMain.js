@@ -30,6 +30,16 @@ class SceneMain extends Phaser.Scene {
         // move the camera
         this.cameras.main.setBounds(0,0,this.background.displayWidth, this.background.displayHeight);
         this.cameras.main.startFollow(this.ship,true);
+        // add rocks
+        this.rockGroup= this.physics.add.group({
+            key: 'rocks',
+            frame: [0,1,2],
+            frameQuantity: 20,
+            bounceX: 1,
+            bounceY: 1,
+            angularVelocity: 1,
+            collideWorldBounds: true
+        });
     }
     backgroundClicked() {
         let targetX = this.background.input.localX * this.background.scaleX;
