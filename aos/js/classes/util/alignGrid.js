@@ -38,12 +38,12 @@ class AlignGrid
 		this.graphics=this.scene.add.graphics();
 		this.graphics.lineStyle(2,0xff0000);
 
-		 for (var i = 0; i < this.config.width; i+=this.cw) {
+		 for ( let i = 0; i < this.config.width; i+=this.cw) {
 		            this.graphics.moveTo(i,0);
 		            this.graphics.lineTo(i,this.config.height);
 		        }
 
-		  for (var i = 0; i < this.config.height; i+=this.ch) {
+		  for ( let i = 0; i < this.config.height; i+=this.ch) {
 		            this.graphics.moveTo(0,i);
 		            this.graphics.lineTo(this.config.width,i);
 		        }
@@ -54,16 +54,16 @@ class AlignGrid
 	placeAt(xx,yy,obj)
 	{
 		//calc position based upon the cellwidth and cellheight
-		var x2=this.cw*xx+this.cw/2;
-		var y2=this.ch*yy+this.ch/2;
+		let x2=this.cw*xx+this.cw/2;
+		let y2=this.ch*yy+this.ch/2;
 
 		obj.x=x2;
 		obj.y=y2;
 	}
 	placeAtIndex(index,obj)
 	{
-		var yy=Math.floor(index/this.config.cols);
-		var xx=index-(yy*this.config.cols);
+		let yy=Math.floor(index/this.config.cols);
+		let xx=index-(yy*this.config.cols);
 
 		this.placeAt(xx,yy,obj);
 
@@ -71,12 +71,12 @@ class AlignGrid
 	showNumbers()
 	{
 		this.show();
-		var count=0;
-		 for (var i = 0; i < this.config.rows; i++) {
-		            for(var j=0;j<this.config.cols;j++)
+		let count=0;
+		 for ( let i = 0; i < this.config.rows; i++) {
+		            for( let j=0;j<this.config.cols;j++)
 		            {
 
-		            	var numText=this.scene.add.text(0,0,count,{color:'#ff0000'});
+						let numText=this.scene.add.text(0,0,count,{color:'#ff0000'});
 		            	numText.setOrigin(0.5,0.5);
 		            	this.placeAtIndex(count,numText);
 

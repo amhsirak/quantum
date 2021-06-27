@@ -24,7 +24,7 @@ class SceneLoad extends Phaser.Scene {
     onProgress(value)
     {
         this.bar.setPercent(value);
-    	var per=Math.floor(value*100);
+        let per=Math.floor(value*100);
     	this.progText.setText(per+"%");
     }
     create() {

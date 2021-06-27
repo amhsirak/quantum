@@ -21,7 +21,7 @@ class Controller
 	}
 	upPoints(points)
 	{
-		var score=model.score;
+		let score=model.score;
 		score+=points;
 		model.score=score;
 	}
