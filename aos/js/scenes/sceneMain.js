@@ -28,7 +28,9 @@ class SceneMain extends Phaser.Scene {
 
         // make the ship move
         this.background.setInteractive();
-        this.background.on('pointerdown', this.backgroundClicked, this);
+        // to fire bullets
+        this.background.on('pointerup', this.backgroundClicked, this);
+        this.background.on('pointerdown', this.onDown, this);
         // move the camera
         this.cameras.main.setBounds(0,0,this.background.displayWidth, this.background.displayHeight);
         this.cameras.main.startFollow(this.ship,true);
@@ -62,16 +64,35 @@ class SceneMain extends Phaser.Scene {
             let speed = Math.floor(Math.random() * 200) + 10;
             child.body.setVelocity(vx*speed, vy*speed);
         }.bind(this));
+        // make the rocks bounce against each other
+        this.physics.add.collider(this.rockGroup);
     }
     backgroundClicked() {
-        let targetX = this.background.input.localX * this.background.scaleX;
-        let targetY = this.background.input.localY * this.background.scaleY;
-        this.targetX = targetX;
-        this.targetY = targetY;
+        let elapsed = Math.abs(this.downTime - this.getTimer());
+        // if elapsed is < 300 then it is a small click
+        if (elapsed < 300) {
 
-        let angle = this.physics.moveTo(this.ship, targetX, targetY, 40);
-        angle = this.toDegrees(angle);
-        this.ship.angle = angle;
+            let targetX = this.background.input.localX * this.background.scaleX;
+            let targetY = this.background.input.localY * this.background.scaleY;
+            this.targetX = targetX;
+            this.targetY = targetY;
+
+            let angle = this.physics.moveTo(this.ship, targetX, targetY, 40);
+            angle = this.toDegrees(angle);
+            this.ship.angle = angle;
+        }
+        else {
+            // long click
+            console.log('FIREEEEEEEEEEE')
+        }
+    }
+    getTimer() {
+        let date = new Date();
+        return date.getTime();
+    }
+    onDown() {
+        this.downTime = this.getTimer();
+
     }
     toDegrees(angle) {
         return angle * (180 / Math.PI); // convert radians to degrees
