@@ -6,12 +6,12 @@ class SceneMain extends Phaser.Scene {
        
     }
     create() {
-        //set up 
+        // set up 
         emitter=new Phaser.Events.EventEmitter();
         controller=new Controller();
-        var mediaManager=new MediaManager({scene:this});
+        let mediaManager=new MediaManager({scene:this});
 
-        var sb=new SoundButtons({scene:this});
+        let sb=new SoundButtons({scene:this});
         
         this.centerX = game.config.width/2;
         this.centerY = game.config.height/2;
@@ -19,18 +19,49 @@ class SceneMain extends Phaser.Scene {
         this.background = this.add.image(0,0,'background');
         this.background.setOrigin(0,0);
         this.ship = this.physics.add.sprite(this.centerX,this.centerY,'ship');
+        Align.scaleToGameW(this.ship,.125);
+
+        this.background.scaleX = this.ship.scaleX;
+        this.background.scaleY = this.ship.scaleY;
+
         // make the ship move
         this.background.setInteractive();
         this.background.on('pointerdown', this.backgroundClicked, this);
+        // move the camera
+        this.cameras.main.setBounds(0,0,this.background.displayWidth, this.background.displayHeight);
+        this.cameras.main.startFollow(this.ship,true);
+        // add rocks
+        this.rockGroup= this.physics.add.group({
+            key: 'rocks',
+            frame: [0,1,2],
+            frameQuantity: 20,
+            bounceX: 1,
+            bounceY: 1,
+            angularVelocity: 1,
+            collideWorldBounds: true
+        });
     }
     backgroundClicked() {
-        var targetX = this.background.input.localX;
-        var targetY = this.background.input.localY;
+        let targetX = this.background.input.localX * this.background.scaleX;
+        let targetY = this.background.input.localY * this.background.scaleY;
+        this.targetX = targetX;
+        this.targetY = targetY;
 
-        this.physics.moveTo(this.ship, targetX, targetY, 20);
+        let angle = this.physics.moveTo(this.ship, targetX, targetY, 40);
+        angle = this.toDegrees(angle);
+        this.ship.angle = angle;
+    }
+    toDegrees(angle) {
+        return angle * (180 / Math.PI); // convert radians to degrees
     }
     
     update() {
-        //constant running loop
+        // constant running loop
+        // to stop the ship
+        let distX = Math.abs(this.ship.x - this.targetX);
+        let distY = Math.abs(this.ship.y - this.targetY);
+        if (distX < 10 && distY < 10) {
+            this.ship.body.setVelocity(0,0);
+        }
     }
 }

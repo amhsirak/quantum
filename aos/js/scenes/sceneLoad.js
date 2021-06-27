@@ -20,11 +20,15 @@ class SceneLoad extends Phaser.Scene {
 
         this.load.image("ship","images/player.png");
         this.load.image("background","images/background.jpg");
+        this.load.spritesheet('rocks',"images/rocks.png", {
+            frameWidth: 120,
+            frameHeight: 100
+        });
     }
     onProgress(value)
     {
         this.bar.setPercent(value);
-    	var per=Math.floor(value*100);
+        let per=Math.floor(value*100);
     	this.progText.setText(per+"%");
     }
     create() {
