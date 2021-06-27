@@ -83,7 +83,8 @@ class SceneMain extends Phaser.Scene {
         }
         else {
             // long click
-            console.log('FIREEEEEEEEEEE')
+           this.makeBullet();
+
         }
     }
     getTimer() {
@@ -97,7 +98,19 @@ class SceneMain extends Phaser.Scene {
     toDegrees(angle) {
         return angle * (180 / Math.PI); // convert radians to degrees
     }
-    
+    getDirFromAngle(angle) {
+        var rads = angle * Math.PI / 180;
+        var tx = Math.cos(rads);
+        var ty = Math.sin(rads);
+        return {tx,ty}
+    }
+    makeBullet() {
+        let dirObj = this.getDirFromAngle(this.ship.angle);
+        console.log(dirObj);
+        let bullet = this.physics.add.sprite(this.ship.x,this.ship.y,'bullet');
+        bullet.angle =  this.ship.angle;
+        bullet.body.setVelocity(dirObj.tx * 200, dirObj.ty * 200);
+    }
     update() {
         // constant running loop
         // to stop the ship
