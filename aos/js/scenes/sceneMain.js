@@ -18,11 +18,13 @@ class SceneMain extends Phaser.Scene {
 
         this.background = this.add.image(0,0,'background');
         this.background.setOrigin(0,0);
+
         this.ship = this.physics.add.sprite(this.centerX,this.centerY,'ship');
         Align.scaleToGameW(this.ship,.125);
 
         this.background.scaleX = this.ship.scaleX;
         this.background.scaleY = this.ship.scaleY;
+        this.physics.world.setBounds(0,0,this.background.displayWidth, this.background.displayHeight);
 
         // make the ship move
         this.background.setInteractive();
@@ -50,9 +52,13 @@ class SceneMain extends Phaser.Scene {
 
             Align.scaleToGameW(child,.1);
 
-            // move rocks
+            // move rocks (-1,0,1)
             let vx = Math.floor(Math.random() * 2) - 1;
             let vy = Math.floor(Math.random() * 2) - 1;
+            if(vx == 0 && vy == 0){
+                vx=1;
+                vy=1;
+            }
             let speed = Math.floor(Math.random() * 200) + 10;
             child.body.setVelocity(vx*speed, vy*speed);
         }.bind(this));
