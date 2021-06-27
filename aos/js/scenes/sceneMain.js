@@ -21,17 +21,23 @@ class SceneMain extends Phaser.Scene {
         this.ship = this.physics.add.sprite(this.centerX,this.centerY,'ship');
         Align.scaleToGameW(this.ship,.125);
 
+        this.background.scaleX = this.ship.scaleX;
+        this.background.scaleY = this.ship.scaleY;
+
         // make the ship move
         this.background.setInteractive();
         this.background.on('pointerdown', this.backgroundClicked, this);
+        // move the camera
+        this.cameras.main.setBounds(0,0,this.background.displayWidth, this.background.displayHeight);
+        this.cameras.main.startFollow(this.ship,true);
     }
     backgroundClicked() {
-        let targetX = this.background.input.localX;
-        let targetY = this.background.input.localY;
+        let targetX = this.background.input.localX * this.background.scaleX;
+        let targetY = this.background.input.localY * this.background.scaleY;
         this.targetX = targetX;
         this.targetY = targetY;
 
-        let angle = this.physics.moveTo(this.ship, targetX, targetY, 20);
+        let angle = this.physics.moveTo(this.ship, targetX, targetY, 40);
         angle = this.toDegrees(angle);
         this.ship.angle = angle;
     }
