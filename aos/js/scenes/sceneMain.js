@@ -109,15 +109,21 @@ class SceneMain extends Phaser.Scene {
             let angle = this.physics.moveTo(this.ship, targetX, targetY, 100);
             angle = this.toDegrees(angle);
             this.ship.angle = angle;
-        }
+
+            let distXEnemy = Math.abs(this.ship.x - targetX);
+            let distYEnemy = Math.abs(this.ship.y - targetY);
+
+            if (distXEnemy > 30  && distYEnemy > 30) {
+             // move enemy ship
+            let enemyAngle = this.physics.moveTo(this.eship, this.ship.x, this.ship.y, 60);
+            enemyAngle = this.toDegrees(enemyAngle);
+            this.eship.angle = enemyAngle;
+
+        } }
         else {
             // long click
            this.makeBullet();
-        }
-        // move enemy ship
-        let enemyAngle = this.physics.moveTo(this.eship, this.ship.x, this.ship.y, 60);
-        enemyAngle = this.toDegrees(enemyAngle);
-        this.eship.angle = enemyAngle;
+        } 
     }
     setColliders() {
          // make the rocks bounce against each other
