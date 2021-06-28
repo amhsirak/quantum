@@ -30,6 +30,7 @@ class SceneLoad extends Phaser.Scene {
         });
         this.load.image("bullet","images/bullet.png");
         this.load.image("eship","images/eship.png");
+        this.load.image("ebullet","images/ebullet.png");
     }
     onProgress(value)
     {

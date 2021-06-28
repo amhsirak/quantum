@@ -5,8 +5,8 @@ body {
 canvas {
     display: block;
     margin: auto;
-    height: 620px;
-    width: 400px;
+    height: 720px;
+    width: 500px;
     cursor: pointer;
 }
 

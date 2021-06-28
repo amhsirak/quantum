@@ -12,19 +12,24 @@ class SceneMain extends Phaser.Scene {
         let mediaManager=new MediaManager({scene:this});
 
         let sb=new SoundButtons({scene:this});
-        
+
+        // cursors = this.input.keyboard.createCursorKeys();
+
         this.centerX = game.config.width/2;
         this.centerY = game.config.height/2;
 
         this.background = this.add.image(0,0,'background');
         this.background.setOrigin(0,0);
 
-        // place the payer ship
+        // place the player ship
         this.ship = this.physics.add.sprite(this.centerX,this.centerY,'ship');
         Align.scaleToGameW(this.ship,.125);
 
-        this.background.scaleX = this.ship.scaleX;
-        this.background.scaleY = this.ship.scaleY;
+        // this.ship.setCollideWorldBounds(true);
+
+        // this.background.scaleX = this.ship.scaleX;
+        // this.background.scaleY = this.ship.scaleY;
+
         this.physics.world.setBounds(0,0,this.background.displayWidth, this.background.displayHeight);
 
         // make the ship move
@@ -99,7 +104,7 @@ class SceneMain extends Phaser.Scene {
             this.targetX = targetX;
             this.targetY = targetY;
 
-            let angle = this.physics.moveTo(this.ship, targetX, targetY, 80);
+            let angle = this.physics.moveTo(this.ship, targetX, targetY, 100);
             angle = this.toDegrees(angle);
             this.ship.angle = angle;
         }
@@ -108,7 +113,7 @@ class SceneMain extends Phaser.Scene {
            this.makeBullet();
         }
         // move enemy ship
-        let enemyAngle = this.physics.moveTo(this.eship, this.ship.x, this.ship.y, 40);
+        let enemyAngle = this.physics.moveTo(this.eship, this.ship.x, this.ship.y, 60);
         enemyAngle = this.toDegrees(enemyAngle);
         this.eship.angle = enemyAngle;
     }
@@ -151,5 +156,34 @@ class SceneMain extends Phaser.Scene {
         if (distX < 10 && distY < 10) {
             this.ship.body.setVelocity(0,0);
         }
+
+        let distXEnemy = Math.abs(this.ship.x - this.eship.x);
+        let distYEnemy = Math.abs(this.ship.y - this.eship.y);
+        if (distXEnemy < game.config.width / 5 && distYEnemy < game.config.height / 5) {
+           this.eship.alpha = .5;
+        }
+        else {
+            this.eship.alpha = 1;
+        }
+
+        // FOR KEYBOARD CONTROLS
+        // this.ship.body.setVelocity(0);
+        // if (cursors.left.isDown)
+        //     {
+        //         this.ship.body.setVelocityX(-100);
+        //     }
+        //     else if (cursors.right.isDown)
+        //     {
+        //         this.ship.body.setVelocityX(100);
+        //     }
+
+        //     if (cursors.up.isDown)
+        //     {
+        //         this.ship.body.setVelocityY(-100);
+        //     }
+        //     else if (cursors.down.isDown)
+        //     {
+        //         this.ship.body.setVelocityY(100);
+        //     }
     }
 }
