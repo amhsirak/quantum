@@ -13,8 +13,6 @@ class SceneMain extends Phaser.Scene {
 
         let sb=new SoundButtons({scene:this});
 
-        // cursors = this.input.keyboard.createCursorKeys();
-
         this.centerX = game.config.width/2;
         this.centerY = game.config.height/2;
 
@@ -26,11 +24,6 @@ class SceneMain extends Phaser.Scene {
         this.ship.body.collideWorldBounds = true;
         Align.scaleToGameW(this.ship,.125);
 
-        // this.ship.setCollideWorldBounds(true);
-
-        // this.background.scaleX = this.ship.scaleX;
-        // this.background.scaleY = this.ship.scaleY;
-
         this.physics.world.setBounds(0,0,this.background.displayWidth, this.background.displayHeight);
 
         // make the ship move
@@ -41,8 +34,8 @@ class SceneMain extends Phaser.Scene {
         // move the camera
         this.cameras.main.setBounds(0,0,this.background.displayWidth, this.background.displayHeight);
         this.cameras.main.startFollow(this.ship,true);
-        this.enemyBulletGroup = this.physics.add.group();
         // add bullets 
+        this.enemyBulletGroup = this.physics.add.group();
         this.bulletGroup = this.physics.add.group();
         // add rocks
         this.rockGroup= this.physics.add.group({
@@ -174,8 +167,10 @@ class SceneMain extends Phaser.Scene {
 
         let enemyBullet = this.physics.add.sprite(this.eship.x,this.eship.y,'ebullet');
         this.enemyBulletGroup.add(enemyBullet);
-        enemyBullet.body.angularVelocity = 10;
-        this.physics.moveTo(enemyBullet, this.ship.x, this.ship.y, 60);
+        let dirEObj = this.getDirFromAngle(this.eship.angle);
+        enemyBullet.angle =  this.eship.angle;
+        this.physics.moveTo(enemyBullet, this.ship.x, this.ship.y, 100);
+        enemyBullet.body.setVelocity(dirEObj.tx * 200, dirEObj.ty * 200);
     }
     destroyRock(bullet,rock) {
         bullet.destroy();
@@ -205,7 +200,7 @@ class SceneMain extends Phaser.Scene {
         explosion.play('boom');
         rock.destroy();
     }
-    rockHitEnemy(rock,ship){
+    rockHitEnemy(ship,rock){
         let explosion = this.add.sprite(rock.x, rock.y, 'exp');
         explosion.play('boom');
         rock.destroy();
