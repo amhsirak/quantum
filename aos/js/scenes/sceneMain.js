@@ -23,6 +23,7 @@ class SceneMain extends Phaser.Scene {
 
         // place the player ship
         this.ship = this.physics.add.sprite(this.centerX,this.centerY,'ship');
+        this.ship.body.collideWorldBounds = true;
         Align.scaleToGameW(this.ship,.125);
 
         // this.ship.setCollideWorldBounds(true);
@@ -88,6 +89,7 @@ class SceneMain extends Phaser.Scene {
 
         // place the enemy ship
         this.eship = this.physics.add.sprite(this.centerX,0,'eship');
+        this.eship.body.collideWorldBounds = true;
         Align.scaleToGameW(this.eship,.25);
 
         this.makeInfo();
@@ -125,6 +127,8 @@ class SceneMain extends Phaser.Scene {
          this.physics.add.collider(this.enemyBulletGroup,this.rockGroup,this.destroyRock,null,this);
          // hit enemy
          this.physics.add.collider(this.bulletGroup,this.eship,this.damageEnemy,null,this);
+         // hit player
+         this.physics.add.collider(this.enemyBulletGroup,this.ship,this.damagePlayer,null,this);
     }
     getTimer() {
         let date = new Date();
@@ -168,6 +172,12 @@ class SceneMain extends Phaser.Scene {
         let explosion = this.add.sprite(rock.x, rock.y, 'exp');
         explosion.play('boom');
         rock.destroy();
+    }
+    damagePlayer(ship,bullet){
+        let explosion = this.add.sprite(this.ship.x, this.ship.y, 'exp');
+        explosion.play('boom');
+        bullet.destroy();
+
     }
     damageEnemy(ship,bullet){
         let explosion = this.add.sprite(bullet.x, bullet.y, 'exp');
