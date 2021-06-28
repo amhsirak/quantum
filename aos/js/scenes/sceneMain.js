@@ -135,6 +135,10 @@ class SceneMain extends Phaser.Scene {
          this.physics.add.collider(this.bulletGroup,this.eship,this.damageEnemy,null,this);
          // hit player
          this.physics.add.collider(this.enemyBulletGroup,this.ship,this.damagePlayer,null,this);
+
+         this.physics.add.collider(this.rockGroup,this.ship,this.rockHitPlayer,null,this);
+         this.physics.add.collider(this.rockGroup,this.eship,this.rockHitEnemy,null,this);
+         
     }
     getTimer() {
         let date = new Date();
@@ -190,6 +194,21 @@ class SceneMain extends Phaser.Scene {
         explosion.play('boom');
         bullet.destroy();
 
+        // move the enemy ship as soon as a bullet is fired on it
+        let enemyAngle = this.physics.moveTo(this.eship, this.ship.x, this.ship.y, 100);
+        enemyAngle = this.toDegrees(enemyAngle);
+        this.eship.angle = enemyAngle;
+
+    }
+    rockHitPlayer(ship, rock){
+        let explosion = this.add.sprite(rock.x, rock.y, 'exp');
+        explosion.play('boom');
+        rock.destroy();
+    }
+    rockHitEnemy(rock,ship){
+        let explosion = this.add.sprite(rock.x, rock.y, 'exp');
+        explosion.play('boom');
+        rock.destroy();
     }
     makeInfo() {
 
@@ -222,8 +241,6 @@ class SceneMain extends Phaser.Scene {
         this.icon2.angle = 270;
         this.icon1.setScrollFactor(0);
         this.icon2.setScrollFactor(0);
-
-
     }
 
     update() {
@@ -240,25 +257,5 @@ class SceneMain extends Phaser.Scene {
         if (distXEnemy < game.config.width / 5 && distYEnemy < game.config.height / 5) {
            this.fireEnemyBullet();
         }
-
-        // FOR KEYBOARD CONTROLS
-        // this.ship.body.setVelocity(0);
-        // if (cursors.left.isDown)
-        //     {
-        //         this.ship.body.setVelocityX(-100);
-        //     }
-        //     else if (cursors.right.isDown)
-        //     {
-        //         this.ship.body.setVelocityX(100);
-        //     }
-
-        //     if (cursors.up.isDown)
-        //     {
-        //         this.ship.body.setVelocityY(-100);
-        //     }
-        //     else if (cursors.down.isDown)
-        //     {
-        //         this.ship.body.setVelocityY(100);
-        //     }
     }
 }
