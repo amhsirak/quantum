@@ -34,6 +34,8 @@ class SceneMain extends Phaser.Scene {
         // move the camera
         this.cameras.main.setBounds(0,0,this.background.displayWidth, this.background.displayHeight);
         this.cameras.main.startFollow(this.ship,true);
+        // add bullets 
+        this.bulletGroup = this.physics.add.group();
         // add rocks
         this.rockGroup= this.physics.add.group({
             key: 'rocks',
@@ -66,6 +68,8 @@ class SceneMain extends Phaser.Scene {
         }.bind(this));
         // make the rocks bounce against each other
         this.physics.add.collider(this.rockGroup);
+        // bullets destroy rocks
+        this.physics.add.collider(this.bulletGroup,this.rockGroup,this.destroyRock,null,this);
     }
     backgroundClicked() {
         let elapsed = Math.abs(this.downTime - this.getTimer());
@@ -108,8 +112,13 @@ class SceneMain extends Phaser.Scene {
         let dirObj = this.getDirFromAngle(this.ship.angle);
         console.log(dirObj);
         let bullet = this.physics.add.sprite(this.ship.x,this.ship.y,'bullet');
+        this.bulletGroup.add(bullet);
         bullet.angle =  this.ship.angle;
         bullet.body.setVelocity(dirObj.tx * 200, dirObj.ty * 200);
+    }
+    destroyRock(bullet,rock) {
+        bullet.destroy();
+        rock.destroy();
     }
     update() {
         // constant running loop
