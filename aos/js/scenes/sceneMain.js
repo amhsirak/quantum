@@ -11,8 +11,11 @@ class SceneMain extends Phaser.Scene {
         controller=new Controller();
         let mediaManager=new MediaManager({scene:this});
 
-        let sb=new SoundButtons({scene:this});
-
+        let sb=new SoundButtons({
+            scene:this
+        });
+        this.shields = 100;
+        this.eshields = 100;
         this.centerX = game.config.width/2;
         this.centerY = game.config.height/2;
 
@@ -37,36 +40,8 @@ class SceneMain extends Phaser.Scene {
         // add bullets 
         this.enemyBulletGroup = this.physics.add.group();
         this.bulletGroup = this.physics.add.group();
-        // add rocks
-        this.rockGroup= this.physics.add.group({
-            key: 'rocks',
-            frame: [0,1,2],
-            frameQuantity: 5,
-            bounceX: 1,
-            bounceY: 1,
-            angularVelocity: 1,
-            collideWorldBounds: true
-        });
-        // place rocks randomly
-        this.rockGroup.children.iterate(function(child){
-            let xx = Math.floor(Math.random() * this.background.displayWidth);
-            let yy = Math.floor(Math.random() * this.background.displayHeight);
-
-            child.x = xx;
-            child.y = yy;
-
-            Align.scaleToGameW(child,.1);
-
-            // move rocks (-1,0,1)
-            let vx = Math.floor(Math.random() * 2) - 1;
-            let vy = Math.floor(Math.random() * 2) - 1;
-            if(vx == 0 && vy == 0){
-                vx=1;
-                vy=1;
-            }
-            let speed = Math.floor(Math.random() * 200) + 10;
-            child.body.setVelocity(vx*speed, vy*speed);
-        }.bind(this));
+        this.rockGroup = this.physics.add.group();
+        this.makeRocks();
 
         // explosion
         let frameNames = this.anims.generateFrameNumbers('exp');
@@ -117,6 +92,40 @@ class SceneMain extends Phaser.Scene {
             // long click
            this.makeBullet();
         } 
+    }
+    makeRocks() {
+        if(this.rockGroup.getChildren().length == 0) {
+            // add rocks
+        this.rockGroup= this.physics.add.group({
+            key: 'rocks',
+            frame: [0,1,2],
+            frameQuantity: 5,
+            bounceX: 1,
+            bounceY: 1,
+            angularVelocity: 1,
+            collideWorldBounds: true
+        });
+            // place rocks randomly
+        this.rockGroup.children.iterate(function(child){
+        let xx = Math.floor(Math.random() * this.background.displayWidth);
+        let yy = Math.floor(Math.random() * this.background.displayHeight);
+
+        child.x = xx;
+        child.y = yy;
+
+        Align.scaleToGameW(child,.1);
+
+        // move rocks (-1,0,1)
+        let vx = Math.floor(Math.random() * 2) - 1;
+        let vy = Math.floor(Math.random() * 2) - 1;
+        if(vx == 0 && vy == 0){
+            vx=1;
+            vy=1;
+        }
+        let speed = Math.floor(Math.random() * 200) + 10;
+        child.body.setVelocity(vx*speed, vy*speed);
+        }.bind(this));
+        }
     }
     setColliders() {
          // make the rocks bounce against each other
@@ -177,11 +186,13 @@ class SceneMain extends Phaser.Scene {
         let explosion = this.add.sprite(rock.x, rock.y, 'exp');
         explosion.play('boom');
         rock.destroy();
+        this.makeRocks();
     }
     damagePlayer(ship,bullet){
         let explosion = this.add.sprite(this.ship.x, this.ship.y, 'exp');
         explosion.play('boom');
         bullet.destroy();
+        this.downPlayer();
 
     }
     damageEnemy(ship,bullet){
@@ -193,17 +204,30 @@ class SceneMain extends Phaser.Scene {
         let enemyAngle = this.physics.moveTo(this.eship, this.ship.x, this.ship.y, 100);
         enemyAngle = this.toDegrees(enemyAngle);
         this.eship.angle = enemyAngle;
+        this.downEnemy();
 
+    }
+    downPlayer() {
+        this.shields--;
+        this.text1.setText("Shields\n"+this.shields);
+    }
+    downEnemy() {
+        this.eshields--;
+        this.text2.setText("Enemy Shields\n"+this.eshields);
     }
     rockHitPlayer(ship, rock){
         let explosion = this.add.sprite(rock.x, rock.y, 'exp');
         explosion.play('boom');
         rock.destroy();
+        this.makeRocks();
+        this.downPlayer();
     }
     rockHitEnemy(ship,rock){
         let explosion = this.add.sprite(rock.x, rock.y, 'exp');
         explosion.play('boom');
         rock.destroy();
+        this.makeRocks();
+        this.downEnemy();
     }
     makeInfo() {
 
