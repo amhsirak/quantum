@@ -175,8 +175,17 @@ class SceneMain extends Phaser.Scene {
 
         this.text1.setOrigin(0.5, 0.5);
         this.text2.setOrigin(0.5, 0.5);
+
         this.uiGrid.placeAtIndex(2,this.text1);
         this.uiGrid.placeAtIndex(8,this.text2);
+
+        // icons 
+        this.icon1 = this.add.image(0,0,"ship");
+        this.icon2 = this.add.image(0,0,"eship");
+        Align.scaleToGameW(this.icon1, .05);
+        Align.scaleToGameW(this.icon2, .07);
+        this.uiGrid.placeAtIndex(1,this.icon1);
+        this.uiGrid.placeAtIndex(6,this.icon2);
 
     }
 
