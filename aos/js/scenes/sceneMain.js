@@ -142,6 +142,17 @@ class SceneMain extends Phaser.Scene {
         bullet.angle =  this.ship.angle;
         bullet.body.setVelocity(dirObj.tx * 200, dirObj.ty * 200);
     }
+    fireEnemyBullet() {
+        let elapsed = Math.abs(this.lastEnemyBullet - this.getTimer());
+        if(elapsed < 500) {
+            return;
+        }
+        this.lastEnemyBullet = this.getTimer();
+        
+        let enemyBullet = this.physics.add.sprite(this.eship.x,this.eship.y,'ebullet');
+        enemyBullet.body.angularVelocity = 10;
+        this.physics.moveTo(enemyBullet, this.ship.x, this.ship.y, 60);
+    }
     destroyRock(bullet,rock) {
         bullet.destroy();
         let explosion = this.add.sprite(rock.x, rock.y, 'exp');
@@ -160,10 +171,7 @@ class SceneMain extends Phaser.Scene {
         let distXEnemy = Math.abs(this.ship.x - this.eship.x);
         let distYEnemy = Math.abs(this.ship.y - this.eship.y);
         if (distXEnemy < game.config.width / 5 && distYEnemy < game.config.height / 5) {
-           this.eship.alpha = .5;
-        }
-        else {
-            this.eship.alpha = 1;
+           this.fireEnemyBullet();
         }
 
         // FOR KEYBOARD CONTROLS
