@@ -40,6 +40,7 @@ class SceneMain extends Phaser.Scene {
         // move the camera
         this.cameras.main.setBounds(0,0,this.background.displayWidth, this.background.displayHeight);
         this.cameras.main.startFollow(this.ship,true);
+        this.enemyBulletGroup = this.physics.add.group();
         // add bullets 
         this.bulletGroup = this.physics.add.group();
         // add rocks
@@ -72,10 +73,6 @@ class SceneMain extends Phaser.Scene {
             let speed = Math.floor(Math.random() * 200) + 10;
             child.body.setVelocity(vx*speed, vy*speed);
         }.bind(this));
-        // make the rocks bounce against each other
-        this.physics.add.collider(this.rockGroup);
-        // bullets destroy rocks
-        this.physics.add.collider(this.bulletGroup,this.rockGroup,this.destroyRock,null,this);
 
         // explosion
         let frameNames = this.anims.generateFrameNumbers('exp');
@@ -94,6 +91,7 @@ class SceneMain extends Phaser.Scene {
         Align.scaleToGameW(this.eship,.25);
 
         this.makeInfo();
+        this.setColliders();
 
     }
     backgroundClicked() {
@@ -118,6 +116,15 @@ class SceneMain extends Phaser.Scene {
         let enemyAngle = this.physics.moveTo(this.eship, this.ship.x, this.ship.y, 60);
         enemyAngle = this.toDegrees(enemyAngle);
         this.eship.angle = enemyAngle;
+    }
+    setColliders() {
+         // make the rocks bounce against each other
+         this.physics.add.collider(this.rockGroup);
+         // bullets destroy rocks
+         this.physics.add.collider(this.bulletGroup,this.rockGroup,this.destroyRock,null,this);
+         this.physics.add.collider(this.enemyBulletGroup,this.rockGroup,this.destroyRock,null,this);
+         // hit enemy
+         this.physics.add.collider(this.bulletGroup,this.eship,this.damageEnemy,null,this);
     }
     getTimer() {
         let date = new Date();
@@ -152,6 +159,7 @@ class SceneMain extends Phaser.Scene {
         this.lastEnemyBullet = this.getTimer();
 
         let enemyBullet = this.physics.add.sprite(this.eship.x,this.eship.y,'ebullet');
+        this.enemyBulletGroup.add(enemyBullet);
         enemyBullet.body.angularVelocity = 10;
         this.physics.moveTo(enemyBullet, this.ship.x, this.ship.y, 60);
     }
@@ -160,6 +168,12 @@ class SceneMain extends Phaser.Scene {
         let explosion = this.add.sprite(rock.x, rock.y, 'exp');
         explosion.play('boom');
         rock.destroy();
+    }
+    damageEnemy(ship,bullet){
+        let explosion = this.add.sprite(bullet.x, bullet.y, 'exp');
+        explosion.play('boom');
+        bullet.destroy();
+
     }
     makeInfo() {
 
