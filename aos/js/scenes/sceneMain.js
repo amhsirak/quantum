@@ -12,18 +12,24 @@ class SceneMain extends Phaser.Scene {
         let mediaManager=new MediaManager({scene:this});
 
         let sb=new SoundButtons({scene:this});
-        
+
+        // cursors = this.input.keyboard.createCursorKeys();
+
         this.centerX = game.config.width/2;
         this.centerY = game.config.height/2;
 
         this.background = this.add.image(0,0,'background');
         this.background.setOrigin(0,0);
 
+        // place the player ship
         this.ship = this.physics.add.sprite(this.centerX,this.centerY,'ship');
         Align.scaleToGameW(this.ship,.125);
 
-        this.background.scaleX = this.ship.scaleX;
-        this.background.scaleY = this.ship.scaleY;
+        // this.ship.setCollideWorldBounds(true);
+
+        // this.background.scaleX = this.ship.scaleX;
+        // this.background.scaleY = this.ship.scaleY;
+
         this.physics.world.setBounds(0,0,this.background.displayWidth, this.background.displayHeight);
 
         // make the ship move
@@ -34,6 +40,8 @@ class SceneMain extends Phaser.Scene {
         // move the camera
         this.cameras.main.setBounds(0,0,this.background.displayWidth, this.background.displayHeight);
         this.cameras.main.startFollow(this.ship,true);
+        // add bullets 
+        this.bulletGroup = this.physics.add.group();
         // add rocks
         this.rockGroup= this.physics.add.group({
             key: 'rocks',
@@ -66,6 +74,27 @@ class SceneMain extends Phaser.Scene {
         }.bind(this));
         // make the rocks bounce against each other
         this.physics.add.collider(this.rockGroup);
+        // bullets destroy rocks
+        this.physics.add.collider(this.bulletGroup,this.rockGroup,this.destroyRock,null,this);
+
+        // explosion
+        let frameNames = this.anims.generateFrameNumbers('exp');
+        let f2 = frameNames.slice();
+        f2.reverse();
+        let f3 = f2.concat(frameNames);
+        this.anims.create({
+            key: 'boom',
+            frames: f3,
+            frameRate: 46,
+            repeat: false
+        });
+
+        // place the enemy ship
+        this.eship = this.physics.add.sprite(this.centerX,0,'eship');
+        Align.scaleToGameW(this.eship,.25);
+
+        this.makeInfo();
+
     }
     backgroundClicked() {
         let elapsed = Math.abs(this.downTime - this.getTimer());
@@ -77,15 +106,18 @@ class SceneMain extends Phaser.Scene {
             this.targetX = targetX;
             this.targetY = targetY;
 
-            let angle = this.physics.moveTo(this.ship, targetX, targetY, 40);
+            let angle = this.physics.moveTo(this.ship, targetX, targetY, 100);
             angle = this.toDegrees(angle);
             this.ship.angle = angle;
         }
         else {
             // long click
            this.makeBullet();
-
         }
+        // move enemy ship
+        let enemyAngle = this.physics.moveTo(this.eship, this.ship.x, this.ship.y, 60);
+        enemyAngle = this.toDegrees(enemyAngle);
+        this.eship.angle = enemyAngle;
     }
     getTimer() {
         let date = new Date();
@@ -108,9 +140,57 @@ class SceneMain extends Phaser.Scene {
         let dirObj = this.getDirFromAngle(this.ship.angle);
         console.log(dirObj);
         let bullet = this.physics.add.sprite(this.ship.x,this.ship.y,'bullet');
+        this.bulletGroup.add(bullet);
         bullet.angle =  this.ship.angle;
         bullet.body.setVelocity(dirObj.tx * 200, dirObj.ty * 200);
     }
+    fireEnemyBullet() {
+        let elapsed = Math.abs(this.lastEnemyBullet - this.getTimer());
+        if(elapsed < 500) {
+            return;
+        }
+        this.lastEnemyBullet = this.getTimer();
+
+        let enemyBullet = this.physics.add.sprite(this.eship.x,this.eship.y,'ebullet');
+        enemyBullet.body.angularVelocity = 10;
+        this.physics.moveTo(enemyBullet, this.ship.x, this.ship.y, 60);
+    }
+    destroyRock(bullet,rock) {
+        bullet.destroy();
+        let explosion = this.add.sprite(rock.x, rock.y, 'exp');
+        explosion.play('boom');
+        rock.destroy();
+    }
+    makeInfo() {
+
+        this.text1 = this.add.text(0,0,"Shields\n100",{fontSize:game.config.width/30, align:"center",backgroundColor:"#000000"});
+        this.text2 = this.add.text(0,0,"Enemy Shields\n100",{fontSize:game.config.width/30,align:"center",backgroundColor:"#000000"});
+
+        this.uiGrid = new AlignGrid({
+            scene: this,
+            rows: 11,
+            cols: 11
+        });
+        // this.uiGrid.showNumbers();
+
+        this.text1.setOrigin(0.5, 0.5);
+        this.text2.setOrigin(0.5, 0.5);
+
+        this.uiGrid.placeAtIndex(2,this.text1);
+        this.uiGrid.placeAtIndex(8,this.text2);
+
+        // icons 
+        this.icon1 = this.add.image(0,0,"ship");
+        this.icon2 = this.add.image(0,0,"eship");
+        Align.scaleToGameW(this.icon1, .05);
+        Align.scaleToGameW(this.icon2, .07);
+        this.uiGrid.placeAtIndex(1,this.icon1);
+        this.uiGrid.placeAtIndex(6,this.icon2);
+        this.icon1.angle = 270;
+        this.icon2.angle = 270;
+
+    }
+
     update() {
         // constant running loop
         // to stop the ship
@@ -119,5 +199,31 @@ class SceneMain extends Phaser.Scene {
         if (distX < 10 && distY < 10) {
             this.ship.body.setVelocity(0,0);
         }
+
+        let distXEnemy = Math.abs(this.ship.x - this.eship.x);
+        let distYEnemy = Math.abs(this.ship.y - this.eship.y);
+        if (distXEnemy < game.config.width / 5 && distYEnemy < game.config.height / 5) {
+           this.fireEnemyBullet();
+        }
+
+        // FOR KEYBOARD CONTROLS
+        // this.ship.body.setVelocity(0);
+        // if (cursors.left.isDown)
+        //     {
+        //         this.ship.body.setVelocityX(-100);
+        //     }
+        //     else if (cursors.right.isDown)
+        //     {
+        //         this.ship.body.setVelocityX(100);
+        //     }
+
+        //     if (cursors.up.isDown)
+        //     {
+        //         this.ship.body.setVelocityY(-100);
+        //     }
+        //     else if (cursors.down.isDown)
+        //     {
+        //         this.ship.body.setVelocityY(100);
+        //     }
     }
 }

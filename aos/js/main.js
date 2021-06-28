@@ -3,6 +3,8 @@ var model;
 var emitter;
 var G;
 var controller;
+var cursors;
+
 window.onload = function() {
     var isMobile = navigator.userAgent.indexOf("Mobile");
     if (isMobile == -1) {
