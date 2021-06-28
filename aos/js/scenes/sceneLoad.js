@@ -24,13 +24,17 @@ class SceneLoad extends Phaser.Scene {
             frameWidth: 120,
             frameHeight: 100
         });
+        this.load.spritesheet('exp',"images/exp.png", {
+            frameWidth: 64,
+            frameHeight: 64
+        });
         this.load.image("bullet","images/bullet.png");
     }
     onProgress(value)
     {
         this.bar.setPercent(value);
-        let per=Math.floor(value*100);
-    	this.progText.setText(per+"%");
+        let per = Math.floor(value * 100);
+    	this.progText.setText(per + "%");
     }
     create() {
     	this.scene.start("SceneTitle");

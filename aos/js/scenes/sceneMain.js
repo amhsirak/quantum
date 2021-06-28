@@ -70,6 +70,20 @@ class SceneMain extends Phaser.Scene {
         this.physics.add.collider(this.rockGroup);
         // bullets destroy rocks
         this.physics.add.collider(this.bulletGroup,this.rockGroup,this.destroyRock,null,this);
+
+        // explosion
+        let frameNames = this.anims.generateFrameNumbers('exp');
+        let f2 = frameNames.slice();
+        f2.reverse();
+        let f3 = f2.concat(frameNames);
+        this.anims.create({
+            key: 'boom',
+            frames: f3,
+            frameRate: 46,
+            repeat: false
+        });
+        this.explosion = this.add.sprite(game.config.width / 2, game.config.height / 2, 'exp');
+        this.explosion.play('boom');
     }
     backgroundClicked() {
         let elapsed = Math.abs(this.downTime - this.getTimer());
