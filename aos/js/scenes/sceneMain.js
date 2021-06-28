@@ -82,8 +82,7 @@ class SceneMain extends Phaser.Scene {
             frameRate: 46,
             repeat: false
         });
-        this.explosion = this.add.sprite(game.config.width / 2, game.config.height / 2, 'exp');
-        this.explosion.play('boom');
+
     }
     backgroundClicked() {
         let elapsed = Math.abs(this.downTime - this.getTimer());
@@ -132,6 +131,8 @@ class SceneMain extends Phaser.Scene {
     }
     destroyRock(bullet,rock) {
         bullet.destroy();
+        let explosion = this.add.sprite(rock.x, rock.y, 'exp');
+        explosion.play('boom');
         rock.destroy();
     }
     update() {
