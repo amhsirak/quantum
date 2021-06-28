@@ -29,6 +29,7 @@ class SceneLoad extends Phaser.Scene {
             frameHeight: 64
         });
         this.load.image("bullet","images/bullet.png");
+        this.load.image("eship","images/eship.png");
     }
     onProgress(value)
     {

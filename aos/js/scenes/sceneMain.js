@@ -19,6 +19,7 @@ class SceneMain extends Phaser.Scene {
         this.background = this.add.image(0,0,'background');
         this.background.setOrigin(0,0);
 
+        // place the payer ship
         this.ship = this.physics.add.sprite(this.centerX,this.centerY,'ship');
         Align.scaleToGameW(this.ship,.125);
 
@@ -83,6 +84,10 @@ class SceneMain extends Phaser.Scene {
             repeat: false
         });
 
+        // place the enemy ship
+        this.eship = this.physics.add.sprite(this.centerX,0,'eship');
+        Align.scaleToGameW(this.eship,.25);
+
     }
     backgroundClicked() {
         let elapsed = Math.abs(this.downTime - this.getTimer());
@@ -94,15 +99,18 @@ class SceneMain extends Phaser.Scene {
             this.targetX = targetX;
             this.targetY = targetY;
 
-            let angle = this.physics.moveTo(this.ship, targetX, targetY, 40);
+            let angle = this.physics.moveTo(this.ship, targetX, targetY, 80);
             angle = this.toDegrees(angle);
             this.ship.angle = angle;
         }
         else {
             // long click
            this.makeBullet();
-
         }
+        // move enemy ship
+        let enemyAngle = this.physics.moveTo(this.eship, this.ship.x, this.ship.y, 40);
+        enemyAngle = this.toDegrees(enemyAngle);
+        this.eship.angle = enemyAngle;
     }
     getTimer() {
         let date = new Date();
