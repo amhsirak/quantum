@@ -178,16 +178,21 @@ class SceneMain extends Phaser.Scene {
 
         this.uiGrid.placeAtIndex(2,this.text1);
         this.uiGrid.placeAtIndex(8,this.text2);
+        this.text1.setScrollFactor(0);
+        this.text2.setScrollFactor(0);
 
         // icons 
         this.icon1 = this.add.image(0,0,"ship");
         this.icon2 = this.add.image(0,0,"eship");
-        Align.scaleToGameW(this.icon1, .05);
-        Align.scaleToGameW(this.icon2, .07);
+        Align.scaleToGameW(this.icon1, .07);
+        Align.scaleToGameW(this.icon2, .09);
         this.uiGrid.placeAtIndex(1,this.icon1);
         this.uiGrid.placeAtIndex(6,this.icon2);
         this.icon1.angle = 270;
         this.icon2.angle = 270;
+        this.icon1.setScrollFactor(0);
+        this.icon2.setScrollFactor(0);
+
 
     }
 
