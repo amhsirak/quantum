@@ -4,29 +4,57 @@ class SceneTitle extends Phaser.Scene {
     }
     preload()
     {
-      this.load.image("button1","images/ui/buttons/2/1.png");
-    	this.load.image("title","images/title.png");
+      this.load.image("button3","images/ui/buttons/2/3.png");
+      this.load.image("button5","images/ui/buttons/2/5.png");
     }
     create() {
         emitter=new Phaser.Events.EventEmitter();
         controller=new Controller();
 
-       this.alignGrid=new AlignGrid({rows:11,cols:11,scene:this});
-       //this.alignGrid.showNumbers();
+       this.alignGrid=new AlignGrid({
+           rows:11,
+           cols:11,
+           scene:this
+        });
+        // this.alignGrid.showNumbers();
 
-        let title=this.add.image(0,0,'title');
-       Align.scaleToGameW(title,.8);
-       this.alignGrid.placeAtIndex(38,title);
+       this.title = this.add.text(0,0,"QUANTUM🪐",{
+        fontSize: game.config.width / 8, 
+        color: "#9556d1",
+        fontWeight: "700"
+     });
+       this.title.setOrigin(0.5,0.5);
+       this.alignGrid.placeAtIndex(27,this.title);
 
-        let btnStart=new FlatButton({scene:this,key:'button1',text:'start',event:'start_game'});
-       this.alignGrid.placeAtIndex(93,btnStart);
+        let btnStart=new FlatButton({
+            scene:this,
+            key:'button3',
+            text:'START',
+            event:'start_game'
+        });
+        this.alignGrid.placeAtIndex(60,btnStart);
 
-       emitter.on('start_game',this.startGame,this);
-       this.scene.start('SceneMain');
+        let btnAbout=new FlatButton({
+            scene:this,
+            key:'button5',
+            text:'HOW TO PLAY?',
+            event:'about_game'
+        });
+        this.alignGrid.placeAtIndex(82,btnAbout);
+        emitter.on('start_game',this.startGame,this);
+        emitter.on('about_game',this.aboutGame,this);
+
+        // let sb=new SoundButtons({
+        //     scene:this
+        // });
     }
     startGame()
     {
         this.scene.start('SceneMain');
+    }
+    aboutGame()
+    {
+       console.log('How to play')
     }
     update() {}
 }

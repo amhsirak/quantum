@@ -11,9 +11,6 @@ class SceneMain extends Phaser.Scene {
         controller=new Controller();
         let mediaManager=new MediaManager({scene:this});
 
-        let sb=new SoundButtons({
-            scene:this
-        });
         this.shields = 3;
         this.eshields = 3;
         model.playerWon = 1;
@@ -63,6 +60,9 @@ class SceneMain extends Phaser.Scene {
 
         this.makeInfo();
         this.setColliders();
+        let sb=new SoundButtons({
+            scene:this
+        });
 
     }
     backgroundClicked() {
