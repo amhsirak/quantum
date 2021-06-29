@@ -1,9 +1,7 @@
-## AOS - Attack On Saturn 🪐 
-AOS is a web game in which your task is to destroy the enemy ship before the enemy ship destroys you. 
+## Quantum 🪐 
+Quantum is a web game built using JavaScript in which your task is to destroy the enemy ship before the enemy ship destroys you. 
 
 Be careful of the asteroids - they descrease your shields too!
-
-* The game is built using JavaScript.
 
 ## To Try This Own Your Own
 
