@@ -1,0 +1,13 @@
+body {
+    background-color: #000000;
+    overflow-y: hidden;
+}
+
+canvas {
+    display: block;
+    margin: auto;
+    width: 360px;
+    height: 640px;
+    cursor: pointer;
+    overflow-y: hidden;
+}

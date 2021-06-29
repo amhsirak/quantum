@@ -11,11 +11,9 @@ class SceneMain extends Phaser.Scene {
         controller=new Controller();
         let mediaManager=new MediaManager({scene:this});
 
-        let sb=new SoundButtons({
-            scene:this
-        });
-        this.shields = 100;
-        this.eshields = 100;
+        this.shields = 3;
+        this.eshields = 3;
+        model.playerWon = 1;
         this.centerX = game.config.width/2;
         this.centerY = game.config.height/2;
 
@@ -24,7 +22,7 @@ class SceneMain extends Phaser.Scene {
 
         // place the player ship
         this.ship = this.physics.add.sprite(this.centerX,this.centerY,'ship');
-        this.ship.body.collideWorldBounds = true;
+        this.ship.body.collideWorldBounds = 1;
         Align.scaleToGameW(this.ship,.125);
 
         this.physics.world.setBounds(0,0,this.background.displayWidth, this.background.displayHeight);
@@ -36,7 +34,7 @@ class SceneMain extends Phaser.Scene {
         this.background.on('pointerdown', this.onDown, this);
         // move the camera
         this.cameras.main.setBounds(0,0,this.background.displayWidth, this.background.displayHeight);
-        this.cameras.main.startFollow(this.ship,true);
+        this.cameras.main.startFollow(this.ship,1);
         // add bullets 
         this.enemyBulletGroup = this.physics.add.group();
         this.bulletGroup = this.physics.add.group();
@@ -52,16 +50,19 @@ class SceneMain extends Phaser.Scene {
             key: 'boom',
             frames: f3,
             frameRate: 46,
-            repeat: false
+            repeat: !1
         });
 
         // place the enemy ship
         this.eship = this.physics.add.sprite(this.centerX,0,'eship');
-        this.eship.body.collideWorldBounds = true;
+        this.eship.body.collideWorldBounds = 1;
         Align.scaleToGameW(this.eship,.25);
 
         this.makeInfo();
         this.setColliders();
+        let sb=new SoundButtons({
+            scene:this
+        });
 
     }
     backgroundClicked() {
@@ -103,7 +104,7 @@ class SceneMain extends Phaser.Scene {
             bounceX: 1,
             bounceY: 1,
             angularVelocity: 1,
-            collideWorldBounds: true
+            collideWorldBounds: 1
         });
             // place rocks randomly
         this.rockGroup.children.iterate(function(child){
@@ -210,10 +211,18 @@ class SceneMain extends Phaser.Scene {
     downPlayer() {
         this.shields--;
         this.text1.setText("Shields\n"+this.shields);
+        if (this.shields == 0) {
+            model.playerWon = !1;
+            this.scene.start("SceneOver");
+        }
     }
     downEnemy() {
         this.eshields--;
         this.text2.setText("Enemy Shields\n"+this.eshields);
+        if (this.eshields == 0) {
+            model.playerWon = 1;
+            this.scene.start("SceneOver");
+        }
     }
     rockHitPlayer(ship, rock){
         let explosion = this.add.sprite(rock.x, rock.y, 'exp');
@@ -231,8 +240,8 @@ class SceneMain extends Phaser.Scene {
     }
     makeInfo() {
 
-        this.text1 = this.add.text(0,0,"Shields\n100",{fontSize:game.config.width/30, align:"center",backgroundColor:"#000000"});
-        this.text2 = this.add.text(0,0,"Enemy Shields\n100",{fontSize:game.config.width/30,align:"center",backgroundColor:"#000000"});
+        this.text1 = this.add.text(0,0,`Shields\n ${this.shields}`,{fontSize:game.config.width/30, align:"center",backgroundColor:"#000000"});
+        this.text2 = this.add.text(0,0,`Enemy Shields\n ${this.eshields}`,{fontSize:game.config.width/30,align:"center",backgroundColor:"#000000"});
 
         this.uiGrid = new AlignGrid({
             scene: this,
@@ -265,16 +274,20 @@ class SceneMain extends Phaser.Scene {
     update() {
         // constant running loop
         // to stop the ship
-        let distX = Math.abs(this.ship.x - this.targetX);
-        let distY = Math.abs(this.ship.y - this.targetY);
-        if (distX < 10 && distY < 10) {
-            this.ship.body.setVelocity(0,0);
-        }
-
-        let distXEnemy = Math.abs(this.ship.x - this.eship.x);
-        let distYEnemy = Math.abs(this.ship.y - this.eship.y);
-        if (distXEnemy < game.config.width / 5 && distYEnemy < game.config.height / 5) {
-           this.fireEnemyBullet();
+        if (this.ship && this.eship) {
+            let distX = Math.abs(this.ship.x - this.targetX);
+            let distY = Math.abs(this.ship.y - this.targetY);
+            if (distX < 10 && distY < 10) {
+                if(this.ship.body) {
+                    this.ship.body.setVelocity(0,0);
+                }
+            }
+    
+            let distXEnemy = Math.abs(this.ship.x - this.eship.x);
+            let distYEnemy = Math.abs(this.ship.y - this.eship.y);
+            if (distXEnemy < game.config.width / 5 && distYEnemy < game.config.height / 5) {
+               this.fireEnemyBullet();
+            }
         }
     }
 }
