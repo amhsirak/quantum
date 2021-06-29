@@ -14,8 +14,8 @@ class SceneMain extends Phaser.Scene {
         let sb=new SoundButtons({
             scene:this
         });
-        this.shields = 100;
-        this.eshields = 100;
+        this.shields = 3;
+        this.eshields = 3;
         model.playerWon = true;
         this.centerX = game.config.width/2;
         this.centerY = game.config.height/2;
@@ -274,16 +274,20 @@ class SceneMain extends Phaser.Scene {
     update() {
         // constant running loop
         // to stop the ship
-        let distX = Math.abs(this.ship.x - this.targetX);
-        let distY = Math.abs(this.ship.y - this.targetY);
-        if (distX < 10 && distY < 10) {
-            this.ship.body.setVelocity(0,0);
-        }
-
-        let distXEnemy = Math.abs(this.ship.x - this.eship.x);
-        let distYEnemy = Math.abs(this.ship.y - this.eship.y);
-        if (distXEnemy < game.config.width / 5 && distYEnemy < game.config.height / 5) {
-           this.fireEnemyBullet();
+        if (this.ship && this.eship) {
+            let distX = Math.abs(this.ship.x - this.targetX);
+            let distY = Math.abs(this.ship.y - this.targetY);
+            if (distX < 10 && distY < 10) {
+                if(this.ship.body) {
+                    this.ship.body.setVelocity(0,0);
+                }
+            }
+    
+            let distXEnemy = Math.abs(this.ship.x - this.eship.x);
+            let distYEnemy = Math.abs(this.ship.y - this.eship.y);
+            if (distXEnemy < game.config.width / 5 && distYEnemy < game.config.height / 5) {
+               this.fireEnemyBullet();
+            }
         }
     }
 }

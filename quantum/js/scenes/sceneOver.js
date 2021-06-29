@@ -4,20 +4,42 @@ class SceneOver extends Phaser.Scene {
     }
     preload()
     {
-        this.load.image("button1","images/ui/buttons/2/1.png");
-    	  this.load.image("title","images/title.png");
+        this.load.image("button3","images/ui/buttons/2/3.png");
     }
     create() {
        
 
        this.alignGrid=new AlignGrid({rows:11,cols:11,scene:this});
-       //this.alignGrid.showNumbers();
+    //    this.alignGrid.showNumbers();
 
-       let title=this.add.image(0,0,'title');
-       Align.scaleToGameW(title,.8);
-       this.alignGrid.placeAtIndex(38,title);
+       this.title = this.add.text(0,0,"QUANTUM🪐",{
+        fontSize: game.config.width / 8, 
+        color: "#9556d1",
+        fontWeight: "700"
+     });
+       this.title.setOrigin(0.5,0.5);
+       this.alignGrid.placeAtIndex(16,this.title);
 
-       let btnStart=new FlatButton({scene:this,key:'button1',text:'Play Again!',event:'start_game'});
+       this.winnerText = this.add.text(0,0,"WINNER:",{
+           fontSize: game.config.width / 10, 
+           color: "#008000"
+        });
+       this.winnerText.setOrigin(0.5,0.5);
+       this.alignGrid.placeAtIndex(38,this.winnerText);
+
+        // winning ship 
+       if (model.playerWon == true) {
+        this.winner = this.add.image(0,0,"ship");   
+       } else {
+        this.winner = this.add.image(0,0,"eship");
+       }
+
+       Align.scaleToGameW(this.winner,.25);
+       this.winner.angle = 270;
+       this.alignGrid.placeAtIndex(60,this.winner);
+
+     
+       let btnStart=new FlatButton({scene:this,key:'button3',text:'PLAY AGAIN',event:'start_game'});
        this.alignGrid.placeAtIndex(93,btnStart);
 
        emitter.on('start_game',this.startGame,this);
