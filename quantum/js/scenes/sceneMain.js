@@ -16,6 +16,7 @@ class SceneMain extends Phaser.Scene {
         });
         this.shields = 100;
         this.eshields = 100;
+        model.playerWon = true;
         this.centerX = game.config.width/2;
         this.centerY = game.config.height/2;
 
@@ -210,10 +211,18 @@ class SceneMain extends Phaser.Scene {
     downPlayer() {
         this.shields--;
         this.text1.setText("Shields\n"+this.shields);
+        if (this.shields == 0) {
+            model.playerWon = false;
+            this.scene.start("SceneOver");
+        }
     }
     downEnemy() {
         this.eshields--;
         this.text2.setText("Enemy Shields\n"+this.eshields);
+        if (this.eshields == 0) {
+            model.playerWon = true;
+            this.scene.start("SceneOver");
+        }
     }
     rockHitPlayer(ship, rock){
         let explosion = this.add.sprite(rock.x, rock.y, 'exp');
@@ -231,8 +240,8 @@ class SceneMain extends Phaser.Scene {
     }
     makeInfo() {
 
-        this.text1 = this.add.text(0,0,"Shields\n100",{fontSize:game.config.width/30, align:"center",backgroundColor:"#000000"});
-        this.text2 = this.add.text(0,0,"Enemy Shields\n100",{fontSize:game.config.width/30,align:"center",backgroundColor:"#000000"});
+        this.text1 = this.add.text(0,0,`Shields\n ${this.shields}`,{fontSize:game.config.width/30, align:"center",backgroundColor:"#000000"});
+        this.text2 = this.add.text(0,0,`Enemy Shields\n ${this.eshields}`,{fontSize:game.config.width/30,align:"center",backgroundColor:"#000000"});
 
         this.uiGrid = new AlignGrid({
             scene: this,
