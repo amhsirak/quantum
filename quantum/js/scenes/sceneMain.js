@@ -11,8 +11,8 @@ class SceneMain extends Phaser.Scene {
         controller=new Controller();
         let mediaManager=new MediaManager({scene:this});
 
-        this.shields = 3;
-        this.eshields = 3;
+        this.shields = 100;
+        this.eshields = 100;
         model.playerWon = 1;
         this.centerX = game.config.width/2;
         this.centerY = game.config.height/2;

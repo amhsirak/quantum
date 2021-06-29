@@ -11,6 +11,8 @@ class SceneOver extends Phaser.Scene {
 
        this.alignGrid=new AlignGrid({rows:11,cols:11,scene:this});
     //    this.alignGrid.showNumbers();
+       this.back = this.add.image(0,0,'back');
+       this.back.setOrigin(0,0);
 
        this.title = this.add.text(0,0,"QUANTUM🪐",{
         fontSize: game.config.width / 8, 
