@@ -3,8 +3,8 @@ class Model
 	constructor()
 	{
 		this._score=0;
-		this.soundOn=true;
-		this._musicOn=true;
+		this.soundOn=1;
+		this._musicOn=1;
 	}
 	set musicOn(val)
 	{

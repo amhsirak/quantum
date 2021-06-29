@@ -19,7 +19,7 @@ class ToggleButton extends Phaser.GameObjects.Container
 
 		if (!config.value)
 		{
-			config.value=true;
+			config.value=1;
 		}
 
 		this.value=config.value;
@@ -57,15 +57,15 @@ class ToggleButton extends Phaser.GameObjects.Container
 	}
 	setIcons()
 	{
-		if (this.value==true)
+		if (this.value==1)
 		{
-			this.onIcon.visible=true;
-			this.offIcon.visible=false;
+			this.onIcon.visible=1;
+			this.offIcon.visible=!1;
 		}
 		else
 		{
-			this.onIcon.visible=false;
-			this.offIcon.visible=true;
+			this.onIcon.visible=!1;
+			this.offIcon.visible=1;
 		}
 	}
 }

@@ -16,7 +16,7 @@ class SceneMain extends Phaser.Scene {
         });
         this.shields = 3;
         this.eshields = 3;
-        model.playerWon = true;
+        model.playerWon = 1;
         this.centerX = game.config.width/2;
         this.centerY = game.config.height/2;
 
@@ -25,7 +25,7 @@ class SceneMain extends Phaser.Scene {
 
         // place the player ship
         this.ship = this.physics.add.sprite(this.centerX,this.centerY,'ship');
-        this.ship.body.collideWorldBounds = true;
+        this.ship.body.collideWorldBounds = 1;
         Align.scaleToGameW(this.ship,.125);
 
         this.physics.world.setBounds(0,0,this.background.displayWidth, this.background.displayHeight);
@@ -37,7 +37,7 @@ class SceneMain extends Phaser.Scene {
         this.background.on('pointerdown', this.onDown, this);
         // move the camera
         this.cameras.main.setBounds(0,0,this.background.displayWidth, this.background.displayHeight);
-        this.cameras.main.startFollow(this.ship,true);
+        this.cameras.main.startFollow(this.ship,1);
         // add bullets 
         this.enemyBulletGroup = this.physics.add.group();
         this.bulletGroup = this.physics.add.group();
@@ -53,12 +53,12 @@ class SceneMain extends Phaser.Scene {
             key: 'boom',
             frames: f3,
             frameRate: 46,
-            repeat: false
+            repeat: !1
         });
 
         // place the enemy ship
         this.eship = this.physics.add.sprite(this.centerX,0,'eship');
-        this.eship.body.collideWorldBounds = true;
+        this.eship.body.collideWorldBounds = 1;
         Align.scaleToGameW(this.eship,.25);
 
         this.makeInfo();
@@ -104,7 +104,7 @@ class SceneMain extends Phaser.Scene {
             bounceX: 1,
             bounceY: 1,
             angularVelocity: 1,
-            collideWorldBounds: true
+            collideWorldBounds: 1
         });
             // place rocks randomly
         this.rockGroup.children.iterate(function(child){
@@ -212,7 +212,7 @@ class SceneMain extends Phaser.Scene {
         this.shields--;
         this.text1.setText("Shields\n"+this.shields);
         if (this.shields == 0) {
-            model.playerWon = false;
+            model.playerWon = !1;
             this.scene.start("SceneOver");
         }
     }
@@ -220,7 +220,7 @@ class SceneMain extends Phaser.Scene {
         this.eshields--;
         this.text2.setText("Enemy Shields\n"+this.eshields);
         if (this.eshields == 0) {
-            model.playerWon = true;
+            model.playerWon = 1;
             this.scene.start("SceneOver");
         }
     }

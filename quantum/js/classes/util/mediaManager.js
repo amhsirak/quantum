@@ -6,7 +6,7 @@ class MediaManager {
     }
     musicChanged() {
         if (this.background) {
-            if (model.musicOn == false) {
+            if (model.musicOn == !1) {
                 this.background.stop();
             } else {
                 this.background.play();
@@ -14,16 +14,16 @@ class MediaManager {
         }
     }
     playSound(key) {
-        if (model.soundOn == true) {
+        if (model.soundOn == 1) {
             let sound = this.scene.sound.add(key);
             sound.play();
         }
     }
     setBackgroundMusic(key) {
-        if (model.musicOn == true) {
+        if (model.musicOn == 1) {
             this.background = this.scene.sound.add(key, {
                 volume: .5,
-                loop: true
+                loop: 1
             });
             this.background.play();
         }

@@ -28,7 +28,7 @@ class SceneOver extends Phaser.Scene {
        this.alignGrid.placeAtIndex(38,this.winnerText);
 
         // winning ship 
-       if (model.playerWon == true) {
+       if (model.playerWon == 1) {
         this.winner = this.add.image(0,0,"ship");   
        } else {
         this.winner = this.add.image(0,0,"eship");
