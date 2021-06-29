@@ -8,7 +8,7 @@ Be careful of the asteroids - they descrease your shields too!
 Clone the repository:
 
 ```
-git clone https://github.com/karishmas6/aos.git
+git clone https://github.com/karishmas6/quantum.git
 ```
 
 Have Fun! 🦄
