@@ -11,14 +11,16 @@ class SceneTitle extends Phaser.Scene {
         emitter=new Phaser.Events.EventEmitter();
         controller=new Controller();
 
-       this.alignGrid=new AlignGrid({
+        this.back = this.add.image(0,0,'back');
+        this.back.setOrigin(0,0);
+        this.alignGrid=new AlignGrid({
            rows:11,
            cols:11,
            scene:this
         });
         // this.alignGrid.showNumbers();
 
-       this.title = this.add.text(0,0,"QUANTUM🪐",{
+        this.title = this.add.text(0,0,"QUANTUM🪐",{
         fontSize: game.config.width / 8, 
         color: "#9556d1",
         fontWeight: "700"

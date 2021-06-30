@@ -19,6 +19,10 @@ class SceneLoad extends Phaser.Scene {
         this.load.image("button1","images/ui/buttons/2/1.png");
         this.load.image("button2","images/ui/buttons/2/5.png");
 
+        this.load.audio("explode",["audio/explode.wav","audio/explode.ogg"]);
+        this.load.audio("enemyShoot",["audio/enemyShoot.wav","audio/enemyShoot.ogg"]);
+        this.load.audio("laser",["audio/laser.wav","audio/laser.ogg"]);
+
         this.load.image("toggleBack","images/ui/toggles/5.png");
         this.load.image("sfxOff","images/ui/icons/sfx_off.png");
         this.load.image("sfxOn","images/ui/icons/sfx_on.png");
@@ -27,6 +31,7 @@ class SceneLoad extends Phaser.Scene {
 
         this.load.image("ship","images/player.png");
         this.load.image("background","images/background.jpg");
+        this.load.image("back","images/back.jpg");
         this.load.spritesheet('rocks',"images/rocks.png", {
             frameWidth: 120,
             frameHeight: 100
