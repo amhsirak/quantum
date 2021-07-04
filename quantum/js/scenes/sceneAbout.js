@@ -4,8 +4,7 @@ class SceneAbout extends Phaser.Scene {
     }
     preload()
     {
-      this.load.image("button3","images/ui/buttons/2/3.png");
-      this.load.image("button5","images/ui/buttons/2/5.png");
+      this.load.image("backButton","images/ui/buttons/backButton.png");
     }
     create() {
         emitter=new Phaser.Events.EventEmitter();
@@ -26,7 +25,14 @@ class SceneAbout extends Phaser.Scene {
         fontWeight: "700"
      });
        this.aboutTitle.setOrigin(0.5,0.5);
-       this.alignGrid.placeAtIndex(5,this.aboutTitle);
+       this.alignGrid.placeAtIndex(16,this.aboutTitle);
+       
+       let btnBack=new FlatButton({
+           scene: this,
+           key: 'backButton',
+           event: 'title_game'
+       });
+       this.alignGrid.placeAtIndex(1,btnBack);
     }
     update() {}
 }
