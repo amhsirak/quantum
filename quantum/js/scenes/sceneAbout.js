@@ -17,7 +17,7 @@ class SceneAbout extends Phaser.Scene {
            cols:11,
            scene:this
         });
-        // this.alignGrid.showNumbers();
+        this.alignGrid.showNumbers();
 
         this.aboutTitle = this.add.text(0,0,"About Quantum🪐",{
         fontSize: game.config.width / 14, 
@@ -31,6 +31,13 @@ class SceneAbout extends Phaser.Scene {
         fontWeight: "400"
      });
        this.alignGrid.placeAtIndex(22,this.description);
+
+       this.controlTitle = this.add.text(0,0,"Controllers",{
+        fontSize: game.config.width / 18, 
+        color: "#9556d1",
+        fontWeight: "700"
+     });
+       this.alignGrid.placeAtIndex(44,this.controlTitle);
        
        let btnBack=new FlatButton({
            scene: this,
