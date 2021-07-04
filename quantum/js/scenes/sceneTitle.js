@@ -53,7 +53,7 @@ class SceneTitle extends Phaser.Scene {
     }
     aboutGame()
     {
-       console.log('How to play')
+       this.scene.start('SceneAbout');
     }
     update() {}
 }
