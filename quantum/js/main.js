@@ -24,7 +24,7 @@ window.onload = function() {
                     debug: !1
                 }
             },
-            scene: [SceneLoad, SceneTitle, SceneMain, SceneOver]
+            scene: [SceneLoad, SceneTitle, SceneAbout, SceneMain, SceneOver]
         };
     } else {
         var config = {
@@ -38,7 +38,7 @@ window.onload = function() {
                     debug: !1
                 }
             },
-            scene: [SceneLoad, SceneTitle, SceneMain, SceneOver]
+            scene: [SceneLoad, SceneTitle, SceneAbout, SceneMain, SceneOver]
         };
     }
     G = new Constants();
