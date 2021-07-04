@@ -26,7 +26,7 @@ class SceneAbout extends Phaser.Scene {
      });
        this.alignGrid.placeAtIndex(11,this.aboutTitle);
 
-        this.description = this.add.text(0,0,"Quantum is a space shooting game\nwhere your task is to destroy the\nenemy ship",{
+        this.description = this.add.text(0,0,"Quantum is a space shooting game\nwhere your task is to destroy the\nenemy ship.\nBe careful of the asteroids-\nthey decrease your shields too!",{
         fontSize: game.config.width / 24, 
         fontWeight: "400"
      });
