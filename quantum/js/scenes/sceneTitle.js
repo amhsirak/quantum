@@ -46,9 +46,6 @@ class SceneTitle extends Phaser.Scene {
         emitter.on('start_game',this.startGame,this);
         emitter.on('about_game',this.aboutGame,this);
 
-        // let sb=new SoundButtons({
-        //     scene:this
-        // });
     }
     startGame()
     {
