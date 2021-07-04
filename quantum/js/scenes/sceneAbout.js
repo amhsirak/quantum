@@ -33,6 +33,11 @@ class SceneAbout extends Phaser.Scene {
            event: 'title_game'
        });
        this.alignGrid.placeAtIndex(1,btnBack);
+       emitter.on('title_game', this.titleGame, this);
+    }
+    titleGame() 
+    {
+        this.scene.start('SceneTitle');
     }
     update() {}
 }
