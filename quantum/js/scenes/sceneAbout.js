@@ -17,7 +17,7 @@ class SceneAbout extends Phaser.Scene {
            cols:11,
            scene:this
         });
-        this.alignGrid.showNumbers();
+        // this.alignGrid.showNumbers();
 
         this.aboutTitle = this.add.text(0,0,"About Quantum🪐",{
         fontSize: game.config.width / 14, 
@@ -26,7 +26,7 @@ class SceneAbout extends Phaser.Scene {
      });
        this.alignGrid.placeAtIndex(11,this.aboutTitle);
 
-        this.description = this.add.text(0,0,"Quantum is a space shooting game\nwhere your task is to destroy the\nenemy ship.\nBe careful of the asteroids-\nthey decrease your shields too!",{
+        this.description = this.add.text(0,0,"Quantum is a space shooting game\nwhere your task is to destroy the\nenemy ship before the enemy ship\ndestroys you.\nBe careful of the asteroids-\nthey decrease your shields too!",{
         fontSize: game.config.width / 24, 
         fontWeight: "400"
      });
@@ -38,6 +38,12 @@ class SceneAbout extends Phaser.Scene {
         fontWeight: "700"
      });
        this.alignGrid.placeAtIndex(44,this.controlTitle);
+
+       this.controllers = this.add.text(0,0,"The game uses orientation on both-\nMobiles & Desktops.\nTo fire a bullet - long press / long\nclick and release",{
+        fontSize: game.config.width / 24, 
+        fontWeight: "700"
+     });
+       this.alignGrid.placeAtIndex(55,this.controllers);
        
        let btnBack=new FlatButton({
            scene: this,
