@@ -24,15 +24,21 @@ class SceneAbout extends Phaser.Scene {
         color: "#9556d1",
         fontWeight: "700"
      });
-       this.aboutTitle.setOrigin(0.5,0.5);
-       this.alignGrid.placeAtIndex(16,this.aboutTitle);
+       this.alignGrid.placeAtIndex(11,this.aboutTitle);
+
+        this.description = this.add.text(0,0,"Quantum is a space shooting game\nwhere your task is to destroy the\nenemy ship",{
+        fontSize: game.config.width / 24, 
+        fontWeight: "400"
+     });
+       this.alignGrid.placeAtIndex(22,this.description);
        
        let btnBack=new FlatButton({
            scene: this,
            key: 'backButton',
            event: 'title_game'
        });
-       this.alignGrid.placeAtIndex(1,btnBack);
+       this.alignGrid.placeAtIndex(0,btnBack);
+       
        emitter.on('title_game', this.titleGame, this);
     }
     titleGame() 
