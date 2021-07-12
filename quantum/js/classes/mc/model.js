@@ -4,17 +4,6 @@ class Model
 	{
 		this._score=0;
 		this.soundOn=1;
-		this._musicOn=1;
-	}
-	set musicOn(val)
-	{
-		this._musicOn=val;
-		console.log("music changed");
-		emitter.emit(G.MUSIC_CHANGED);
-	}
-	get musicOn()
-	{
-		return this._musicOn;
 	}
 	set score(val)
 	{
