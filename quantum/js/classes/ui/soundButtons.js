@@ -5,13 +5,6 @@ class SoundButtons extends Phaser.GameObjects.Container
 		super(config.scene);
 		this.scene=config.scene;
 
-		 this.musicButton=new ToggleButton({
-			 scene:this.scene,
-			 backKey:'toggleBack',
-			 onIcon:'musicOn',
-			 offIcon:'musicOff',
-			 event:G.TOGGLE_MUSIC
-		});
 		 this.sfxButton=new ToggleButton({
 			 scene:this.scene,
 			 backKey:'toggleBack',
@@ -19,19 +12,14 @@ class SoundButtons extends Phaser.GameObjects.Container
 			 offIcon:'sfxOff',
 			 event:G.TOGGLE_SOUND
 		});
-
-		 this.add(this.musicButton);
 		 this.add(this.sfxButton);
 
-		 this.musicButton.y=this.musicButton.height/2;
-		 this.musicButton.x=this.musicButton.width/2;
-
 		 this.sfxButton.x=game.config.width-this.sfxButton.width/2;
-		 this.sfxButton.y=this.musicButton.y;
+
+		 this.sfxButton.y=this.sfxButton.height/1.5;
+
 
 		 this.sfxButton.setNoScroll();
-		 this.musicButton.setScrollFactor(0);
-
 		 this.scene.add.existing(this);
 	}
 }
