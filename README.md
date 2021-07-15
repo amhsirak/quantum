@@ -1,7 +1,8 @@
 ## Quantum 🪐 
-Quantum is a web game built using JavaScript in which your task is to destroy the enemy ship before the enemy ship destroys you. 
+Quantum is a space battle web game built using JavaScript.
+Your task is to destroy the enemy ship before the enemy ship destroys you 
 
-Be careful of the asteroids - they descrease your shields too!
+Be careful of the asteroids - they decrease your shields too!
 
 ## To Try This Own Your Own
 
