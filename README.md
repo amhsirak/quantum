@@ -13,7 +13,7 @@ Play/Pause functionality
 
 ## To Try This Own Your Own
 
-Clone the repository:
+Clone the repository inside your local webserver, like xampp, lampp and so on:
 
 ```
 git clone https://github.com/karishmashuklaa/quantum.git
