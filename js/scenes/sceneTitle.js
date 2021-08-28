@@ -23,7 +23,7 @@ class SceneTitle extends Phaser.Scene {
         this.title = this.add.text(0,0,"QUANTUM",{
         fontSize: game.config.width / 8, 
         color: "#9556d1",
-        fontWeight: "700"
+        fontWeight: "800"
      });
        this.title.setOrigin(0.5,0.5);
        this.alignGrid.placeAtIndex(27,this.title);
