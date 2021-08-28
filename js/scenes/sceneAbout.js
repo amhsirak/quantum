@@ -19,7 +19,7 @@ class SceneAbout extends Phaser.Scene {
         });
         //this.alignGrid.showNumbers();
 
-        this.aboutTitle = this.add.text(0,0,"About Quantum🪐",{
+        this.aboutTitle = this.add.text(0,0,"About Quantum",{
         fontSize: game.config.width / 14, 
         color: "#9556d1",
         fontWeight: "700"

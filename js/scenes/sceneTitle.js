@@ -20,7 +20,7 @@ class SceneTitle extends Phaser.Scene {
         });
         // this.alignGrid.showNumbers();
 
-        this.title = this.add.text(0,0,"QUANTUM🪐",{
+        this.title = this.add.text(0,0,"QUANTUM",{
         fontSize: game.config.width / 8, 
         color: "#9556d1",
         fontWeight: "700"
