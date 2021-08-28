@@ -17,7 +17,7 @@ class SceneAbout extends Phaser.Scene {
            cols:11,
            scene:this
         });
-        // this.alignGrid.showNumbers();
+        //this.alignGrid.showNumbers();
 
         this.aboutTitle = this.add.text(0,0,"About Quantum🪐",{
         fontSize: game.config.width / 14, 

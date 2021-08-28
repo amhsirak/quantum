@@ -23,7 +23,7 @@ class SceneMain extends Phaser.Scene {
         // place the player ship
         this.ship = this.physics.add.sprite(this.centerX,this.centerY,'ship');
         this.ship.body.collideWorldBounds = 1;
-        Align.scaleToGameW(this.ship,.125);
+        Align.scaleToGameW(this.ship,.25);
 
         this.physics.world.setBounds(0,0,this.background.displayWidth, this.background.displayHeight);
 
@@ -56,7 +56,7 @@ class SceneMain extends Phaser.Scene {
         // place the enemy ship
         this.eship = this.physics.add.sprite(this.centerX,0,'eship');
         this.eship.body.collideWorldBounds = 1;
-        Align.scaleToGameW(this.eship,.25);
+        Align.scaleToGameW(this.eship,.35);
 
         this.makeInfo();
         this.setColliders();
