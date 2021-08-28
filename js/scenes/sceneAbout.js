@@ -22,26 +22,30 @@ class SceneAbout extends Phaser.Scene {
         this.aboutTitle = this.add.text(0,0,"About Quantum",{
         fontSize: game.config.width / 14, 
         color: "#9556d1",
-        fontWeight: "700"
+        fontWeight: "700",
+        fontFamily: "Anton"
      });
        this.alignGrid.placeAtIndex(11,this.aboutTitle);
 
         this.description = this.add.text(0,0,"Quantum is a space shooting game\nwhere your task is to destroy the\nenemy ship before the enemy ship\ndestroys you.\nBe careful of the asteroids-\nthey decrease your shields too!",{
         fontSize: game.config.width / 24, 
-        fontWeight: "400"
+        fontWeight: "400",
+        fontFamily: "Anton"
      });
        this.alignGrid.placeAtIndex(22,this.description);
 
        this.controlTitle = this.add.text(0,0,"Controllers",{
-        fontSize: game.config.width / 18, 
+        fontSize: game.config.width / 14, 
         color: "#9556d1",
-        fontWeight: "700"
+        fontWeight: "700",
+        fontFamily: "Anton"
      });
        this.alignGrid.placeAtIndex(44,this.controlTitle);
 
        this.controllers = this.add.text(0,0,"The game uses orientation on both-\nMobiles & Desktops.\nTo fire a bullet - long press / long\nclick and release",{
         fontSize: game.config.width / 24, 
-        fontWeight: "700"
+        fontWeight: "700",
+        fontFamily: "Anton"
      });
        this.alignGrid.placeAtIndex(55,this.controllers);
        
