@@ -22,8 +22,5 @@ git clone https://github.com/karishmashuklaa/quantum.git
 ## Issues
 Raise an [Issue](https://github.com/karishmashuklaa/quantum/issues) if you find any bugs/got ideas. 
 
-
-***Thanks for reading! ⭐ Dont forget to star the [Repository](https://github.com/karishmashuklaa/quantum) ⭐***
-
 Have Fun! 🦄
 
